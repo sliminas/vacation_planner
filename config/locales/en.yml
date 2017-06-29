@@ -1,0 +1,34 @@
+en:
+
+  misc:
+    signed_in_employee: Signed in as %{name}
+    sign_in: Sign in
+    sign_out: Sign out
+    remember_me: Remember me
+
+  employee:
+    model_name:
+      one: Employee
+      other: Employees
+    index:
+      h2: Employees
+      none: No employees found.
+      new_employee: New employee
+    new:
+      h2: New employee
+
+    table:
+      th:
+        name: Name
+        email: Email
+        vacation_days: Vacation Days
+        taken_vacation_days: Taken
+        supervisor: Supervisor
+
+  vacation_request:
+    model_name:
+      one: Vacation Request
+      other: Vacation Requests
+    index:
+      h2: Vacation requests
+      none: No vacation requests found.

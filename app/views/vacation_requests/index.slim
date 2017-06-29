@@ -1,0 +1,7 @@
+h2 = t('vacation_request.index.h2')
+
+- if @requests.any?
+  = render 'requests_table'
+- else
+  span.alert.alert-warning
+    = t('vacation_request.index.none')

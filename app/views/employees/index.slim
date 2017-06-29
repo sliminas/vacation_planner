@@ -1,0 +1,9 @@
+h2 = t('employee.index.h2')
+
+= link_to t('employee.index.new_employee'), new_employee_path
+
+- if @employees.any?
+  = render 'employees_table'
+- else
+  span.alert.alert-warning
+    = t('employee.index.none')

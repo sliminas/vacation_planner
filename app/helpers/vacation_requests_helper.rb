@@ -1,0 +1,2 @@
+module VacationRequestsHelper
+end

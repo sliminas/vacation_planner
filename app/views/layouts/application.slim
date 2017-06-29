@@ -1,0 +1,25 @@
+html
+  head
+    title VacationPlanner
+    = csrf_meta_tags
+    meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"
+
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+
+  body
+
+    nav.navbar.navbar-expand-md.navbar-inverse.bg-primary
+      .container
+        a.navbar-brand href="/" VacationPlanner
+        button.navbar-toggler.navbar-toggler-right type="button" data-toggle="collapse" data-target="#navbar_toggle_target"
+          span.navbar-toggler-icon
+
+        - if navigation_entries.present?
+          #navbar_toggle_target.navbar-collapse.collapse
+            .navbar-nav
+              = navigation_links
+
+    #content.container
+      = flash_message
+      = yield

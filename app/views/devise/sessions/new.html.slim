@@ -1,0 +1,27 @@
+= form_for(resource, as: resource_name, url: session_path(resource_name),
+    html: { id: 'sign_in_form' }) do |f|
+  .row
+    .col-2
+    h2.col-10 Sign in
+  .form-group.row
+    = f.label :email, class: 'col-sm-2 col-form-label'
+    .col-sm-10
+      = f.email_field :email, autofocus: true, class: 'form-control', placeholder: 'you@example.com'
+
+  .form-group.row
+    = f.label :password, class: 'col-sm-2 col-form-label'
+    .col-sm-10
+      = f.password_field :password, autocomplete: 'off', class: 'form-control', placeholder: 'Your password'
+
+  .form-group.row
+    .col-sm-2
+    .col-sm-10
+      .form-check
+        = f.label :remember_me, class: 'form-check-label'
+          = f.check_box :remember_me, class: 'form-check-input'
+          = t('misc.remember_me')
+
+  .form-group.row
+    .col-2
+    .col-10
+      = f.submit t('misc.sign_in'), class: 'btn btn-primary'
