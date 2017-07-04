@@ -1,6 +1,7 @@
-h2 = t('employee.index.h2')
-
-= link_to t('employee.index.new_employee'), new_employee_path
+.row
+  h2.col-6 = t('employee.index.h2')
+  .col-6
+    = link_to t('employee.index.new_employee'), new_employee_path, class: 'btn btn-primary float-right'
 
 - if @employees.any?
   = render 'employees_table'

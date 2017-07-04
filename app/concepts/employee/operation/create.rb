@@ -8,7 +8,7 @@ class Employee::Create < Trailblazer::Operation
   end
 
   step Nested(Present)
-  step Contract::Validate()
+  step Contract::Validate(key: :employee)
   step Contract::Persist()
 
 end

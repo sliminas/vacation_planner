@@ -17,8 +17,11 @@ html
 
         - if navigation_entries.present?
           #navbar_toggle_target.navbar-collapse.collapse
-            .navbar-nav
+            .navbar-nav.mr-auto
               = navigation_links
+            .navbar-nav.ml-auto
+              = content_tag :span, t('misc.signed_in_employee',
+                name: current_employee.name), class: 'navbar-text'
 
     #content.container
       = flash_message

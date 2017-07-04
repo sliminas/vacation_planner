@@ -17,11 +17,12 @@ module ApplicationHelper
   def navigation_entries
     entries = []
     if current_employee
-      entries << [t('vacation_request.model_name', count: 2), vacation_requests_path]
-      entries << [t('employee.model_name', count: 2), employees_path] if supervisor?
+      entries << [t('nav.vacation_requests'), vacation_requests_path]
+      if supervisor?
+        entries << [t('nav.manage_vacation_requests'), manage_vacation_requests_path]
+        entries << [t('employee.model_name', count: 2), employees_path]
+      end
       entries << [t('misc.sign_out'), destroy_employee_session_path, { method: :delete }]
-      entries << [t('misc.signed_in_employee', name: current_employee.name)]
-    else
     end
     entries
   end
@@ -43,5 +44,9 @@ module ApplicationHelper
     current_employee.supervisor?
   end
 
+  def sort_dir(property)
+    currently_sorted = property.to_s == params[:sort]
+    (params[:sort_dir] == 'asc' && currently_sorted) ? :desc : :asc
+  end
 
 end

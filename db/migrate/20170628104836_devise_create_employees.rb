@@ -9,8 +9,8 @@ class DeviseCreateEmployees < ActiveRecord::Migration[5.1]
       ## Rememberable
       t.datetime :remember_created_at
 
-      t.float :vacation_days
-      t.float :taken_vacation_days
+      t.float :vacation_days, null: false, default: 0.0
+      t.float :taken_vacation_days, null: false, default: 0.0
       t.boolean :supervisor, default: false
 
       t.timestamps null: false

@@ -18,6 +18,14 @@ class ActiveSupport::TestCase
 
   include EmployeeTestHelper
 
+  def assert_email_sent(count: 1)
+    assert_difference 'ActionMailer::Base.deliveries.size', count do
+      perform_enqueued_jobs do
+        yield
+      end
+    end
+  end
+
 end
 
 class ActionDispatch::IntegrationTest

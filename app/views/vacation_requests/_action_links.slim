@@ -1,0 +1,14 @@
+- btn_class = "btn#{' disabled' if vacation_request.state != 'pending'}"
+- if manage?
+  td width="5%"= link_to t('misc.accept'), vacation_request_path(vacation_request.model, manage_action: 'accepted'),
+    method: :patch,
+    class: "#{btn_class} btn-primary"
+  td width="5%"= link_to t('misc.decline'), vacation_request_path(vacation_request.model, manage_action: 'declined'),
+    method: :patch,
+    class: "#{btn_class} btn-danger"
+- else
+  td width="5%"= link_to t('misc.delete'), vacation_request_path(vacation_request.model),
+    method: :delete,
+    data: { confirm: t('vacation_request.destroy.confirm',
+      start: vacation_request.start_date, end: vacation_request.end_date) },
+    class: "#{btn_class} btn-danger"

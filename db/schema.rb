@@ -21,8 +21,8 @@ ActiveRecord::Schema.define(version: 20170628110740) do
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.datetime "remember_created_at"
-    t.float "vacation_days"
-    t.float "taken_vacation_days"
+    t.float "vacation_days", default: 0.0, null: false
+    t.float "taken_vacation_days", default: 0.0, null: false
     t.boolean "supervisor", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -31,8 +31,8 @@ ActiveRecord::Schema.define(version: 20170628110740) do
 
   create_table "vacation_requests", force: :cascade do |t|
     t.string "state", null: false
-    t.date "start", null: false
-    t.date "end", null: false
+    t.date "start_date", null: false
+    t.date "end_date", null: false
     t.float "vacation_days", null: false
     t.float "total_days", null: false
     t.bigint "employee_id"

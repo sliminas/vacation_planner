@@ -1,0 +1,14 @@
+- errors = @form.errors&.messages.try(:[], property).presence
+
+div class=("form-group row#{' has-danger' if errors}")
+  = form.label property, class: 'col-4 col-form-label'
+  .col-8
+    - current_year = Date.today.year
+    = form.date_field property, class: "form-control#{' form-control-danger' if errors}",
+      value: @form.send(property),
+      min: "#{current_year}-01-01",
+      max: "#{current_year}-12-31"
+
+    - if errors
+      - errors.each do |message|
+        .form-control-feedback= message

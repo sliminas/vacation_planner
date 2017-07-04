@@ -4,4 +4,10 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_employee!
   layout 'application'
 
+  private
+
+  def authorize_supervisor
+    redirect_to root_path unless current_employee.supervisor?
+  end
+
 end

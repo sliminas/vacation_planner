@@ -1,21 +1,24 @@
 en:
-
   misc:
     signed_in_employee: Signed in as %{name}
     sign_in: Sign in
     sign_out: Sign out
     remember_me: Remember me
+    create: Create
+    save: Save
+    edit: Edit
+    delete: Delete
+    accept: Accept
+    decline: Decline
+
+  nav:
+    vacation_requests: My vacation requests
+    manage_vacation_requests: Manage vacation requests
 
   employee:
     model_name:
       one: Employee
       other: Employees
-    index:
-      h2: Employees
-      none: No employees found.
-      new_employee: New employee
-    new:
-      h2: New employee
 
     table:
       th:
@@ -23,12 +26,82 @@ en:
         email: Email
         vacation_days: Vacation Days
         taken_vacation_days: Taken
+        vacation_requests: Vacation Requests
         supervisor: Supervisor
+
+    index:
+      h2: Employees
+      none: No employees found.
+      new_employee: New employee
+    new:
+      h2: New employee
+    edit:
+      h2: Edit employee
+    update:
+      success: Employee successfully updated.
+    create:
+      success: Employee successfully created.
+    destroy:
+      confirm: Are you sure you want to delete the employee "%{name}"?
+      success: Employee successfully deleted.
+      failure: The employee could not be deleted.
+      last_supervisor: The employee can not be deleted because it is the last supervisor.
 
   vacation_request:
     model_name:
       one: Vacation Request
       other: Vacation Requests
+
+    table:
+      th:
+        start_date: Start Date
+        end_date: End Date
+        employee: Employee
+        vacation_days: Vacation Days
+        total_days: Total Days
+        state: Status
+
     index:
-      h2: Vacation requests
+      h2: My vacation requests
+      new_vacation_request: New vacation request
       none: No vacation requests found.
+    new:
+      h2: New vacation request
+    edit:
+      h2: Edit vacation request
+    manage:
+      success:
+        accepted: The vacation request has been accepted.
+        declined: The vacation request has been declined.
+      failure:
+        accepted: The vacation request could not be accepted.
+        declined: The vacation request could not be declined.
+    create:
+      success: Vacation request successfully created.
+      failure: Vacation request could not be created.
+    destroy:
+      confirm: Are you sure you want to delete the vacation request from "%{start}" to "%{end}"?
+      success: Vacation request successfully deleted.
+      failure: The vacation request could not be deleted.
+
+  activemodel:
+    errors:
+      models:
+        employee:
+          attributes:
+            supervisor:
+              last_supervisor: Can not remove supervisor flag since this is the last supervisor.
+
+        vacation_request:
+          attributes:
+            start_date:
+              wrong_year: must be in 2017
+              conflict: overlaps with an other vacation request
+            end_date:
+              wrong_year: must be in 2017
+              before_start: must be after start date
+              conflict: overlaps with an other vacation request
+            vacation_days:
+              too_few: Too few vacation days left.
+              none: The selected period does not contain any workdays.
+

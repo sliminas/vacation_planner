@@ -7,23 +7,25 @@ class EmployeeWorkflowTest < ActionDispatch::IntegrationTest
       @employee = create_employee
     end
 
-    should 'be able to login' do
+    should 'be able to sign in and out' do
       sign_in @employee
 
-      assert has_content? 'Vacation requests'
+      assert has_content? 'My vacation requests'
       assert has_content? 'No vacation requests found.'
-      assert has_content? 'Signed in as Max Muster'
+      assert has_content? "Signed in as #{@employee.name}"
       assert has_no_link? 'Employees'
+      click_on 'Sign out'
+      assert has_content? 'Signed out successfully.'
     end
   end
 
   context 'as supervisor' do
     setup do
-      @supervisor = create_supervisor
+      @supervisor = create_supervisor(name: 'Zupervisor')
       sign_in @supervisor
     end
 
-    should 'create new employee' do
+    should 'create employee' do
       click_on 'Employees'
       assert has_content? 'Employees'
       assert has_content? @supervisor.email
@@ -32,27 +34,78 @@ class EmployeeWorkflowTest < ActionDispatch::IntegrationTest
 
       click_on 'New employee'
       assert has_content? 'New employee'
+      assert has_field? 'Supervisor'
+      assert has_no_checked_field? 'Supervisor'
+
       fill_in 'Name', with: 'Employee of the year'
       fill_in 'Email', with: 'email@oftheyear.de'
       fill_in 'Password', with: 'new_sEcretPa$$W0rd'
       fill_in 'Vacation days', with: 'skaldjf'
-      # TODO assert find unchecked supervisor checkbox
 
-      click_on 'Create emloyee'
+      assert_no_difference 'Employee.count' do
+        click_on 'Create'
+      end
 
-      assert has_content? 'Vacation days must be a number'
+      assert has_content? 'is not a number'
       fill_in 'Vacation days', with: 12.5
 
       assert_difference 'Employee.count' do
-        # assert_email_sent do
-          click_on 'Create emloyee'
-        # end
+        click_on 'Create'
+        assert has_content? 'Employee successfully created.'
       end
 
-      assert has_content? 'Employee successfully created.'
+      assert has_content? 'email@oftheyear.de'
+      assert has_content? 'Employee of the year'
+    end
 
-      mail = ActionMailer::Base.deliveries.last
-      assert_equal 'email@oftheyear.de', mail.to
+    context 'with existing employees' do
+      setup do
+        @employee = create_employee(name: 'Example employee')
+        visit '/employees'
+      end
+
+      should 'have sortable employees' do
+        create_employee(name: 'Another Employee')
+        visit '/employees'
+        assert has_content? 'Another Employee'
+
+        click_on 'Name'
+        sleep 0.25 # find doesn't wait
+        assert_equal 'Another Employee', find(:xpath, '//tbody/tr[1]/td[2]').text
+        assert_equal 'Example employee', find(:xpath, '//tbody/tr[2]/td[2]').text
+        assert_equal 'Zupervisor', find(:xpath, '//tbody/tr[3]/td[2]').text
+
+        click_on 'Name'
+        sleep 0.25
+        assert_equal 'Zupervisor', find(:xpath, '//tbody/tr[1]/td[2]').text
+        assert_equal 'Example employee', find(:xpath, '//tbody/tr[2]/td[2]').text
+        assert_equal 'Another Employee', find(:xpath, '//tbody/tr[3]/td[2]').text
+      end
+
+      should 'update employee' do
+        assert has_content? 'Employees'
+        assert has_content? 'Example employee'
+        find(:xpath, '//tbody/tr[2]').click_on 'Edit'
+
+        assert has_content? 'Edit employee'
+        assert_equal 'Example employee', find_field('employee_name').value
+        check 'Supervisor'
+        fill_in 'Name', with: 'Other employee'
+        click_on 'Save'
+
+        assert has_content? 'Employee successfully updated.'
+        assert has_content? 'Other employee'
+        assert has_no_content? 'Example employee'
+      end
+
+      should 'delete employee' do
+        assert_difference 'Employee.count', -1 do
+          find(:xpath, '//tbody/tr[2]').click_on 'Delete'
+          assert has_content? 'Employee successfully deleted.'
+        end
+        assert has_no_content? 'Example employee'
+        assert has_content? @supervisor.email
+      end
     end
   end
 

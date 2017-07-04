@@ -1,0 +1,24 @@
+= form_for @form do |f|
+  .row
+    .col-sm-3
+    h2.col-sm-9 = heading
+
+  - %i(name email password vacation_days).each do |property|
+    = render 'text_field', form: f, property: property
+
+  - errors = @form.errors&.messages.try(:[], :supervisor).presence
+  div class=("form-group row#{' has-danger' if errors}")
+    = f.label :supervisor, class: 'col-sm-3 form-check-label'
+    .col-sm-9
+      div class=("form-check#{' has-danger' if errors}")
+        .form-check-label
+          = f.check_box :supervisor, class: 'form-check-input'
+      - if errors
+        - errors.each do |message|
+          .form-control-feedback= message
+
+  .form-group.row
+    .col-sm-3
+    .col-sm-9
+      = f.submit t("misc.#{@form.model.persisted? ? 'save' : 'create' }"),
+        class: 'btn btn-primary'

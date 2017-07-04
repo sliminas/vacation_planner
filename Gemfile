@@ -7,21 +7,20 @@ end
 
 gem 'rails', '~> 5.1.2'
 gem 'pg', '~> 0.18'
+gem 'activerecord-precount'
 
 gem 'trailblazer-rails'
 gem 'trailblazer-cells'
 gem 'reform', '2.3.0.rc1'
-gem 'reform-rails', github: 'sliminas/reform-rails', branch: 'fix_nested_form_validation'
+gem 'reform-rails', '0.2.0.rc1'
 gem 'slim-rails'
 
-gem 'dry-validation'
 gem 'rfc822'
 
 gem 'devise'
 gem 'holidays'
 
 gem 'bootstrap', git: 'https://github.com/twbs/bootstrap-rubygem'
-gem 'bootstrap-datetimepicker-rails'
 gem 'sass-rails', '~> 5.0'
 
 gem 'jquery-rails'
@@ -48,6 +47,7 @@ group :test do
   gem 'shoulda'
   gem 'shoulda-context'
   gem 'poltergeist'
+  gem 'faker'
 end
 
 group :development do

@@ -1,0 +1,15 @@
+- errors = @form.errors&.messages.try(:[], property).presence
+
+div class=("form-group row#{' has-danger' if errors}")
+  = form.label property, class: 'col-sm-3 col-form-label'
+  .col-sm-9
+    - field_class = "form-control#{' form-control-danger' if errors}"
+
+    - if property == :email
+      = form.email_field property, class: field_class, value: @form.send(property)
+    - else
+      = form.text_field property, class: field_class, value: @form.send(property)
+
+    - if errors
+      - errors.each do |message|
+        .form-control-feedback= message

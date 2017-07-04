@@ -1,0 +1,8 @@
+.row
+  h2= t('nav.manage_vacation_requests')
+
+- if @requests.any?
+  = render 'vacation_requests_table'
+- else
+  span.alert.alert-warning
+    = t('vacation_request.index.none')

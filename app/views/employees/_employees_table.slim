@@ -1,12 +1,16 @@
-table#emplyoees.table.table-striped.table-bordered.table-responsive
+table#employees.table.table-striped.table-bordered.table-responsive
   thead
     tr
       th #
-      th= t('employee.table.th.name')
+      th= link_to t('employee.table.th.name'),
+        employees_path(sort: :name, sort_dir: params[:sort_dir] == 'asc' ? :desc : :asc)
       th= t('employee.table.th.email')
       th= t('employee.table.th.vacation_days')
       th= t('employee.table.th.taken_vacation_days')
+      th= t('employee.table.th.vacation_requests')
       th= t('employee.table.th.supervisor')
+      th
+      th
 
   tbody
-    = render @employees
+    = render partial: 'employee', collection: @employees

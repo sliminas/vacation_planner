@@ -4,4 +4,9 @@ tr
   td width="20%"= employee.email
   td width="10%"= employee.vacation_days
   td width="5%"= employee.taken_vacation_days
+  td width="5%"= employee.vacation_requests_count
   td width="5%"= employee.supervisor
+  td width="5%"= link_to t('misc.edit'), edit_employee_path(employee.model), class: 'btn btn-secondary'
+  td width="5%"= link_to t('misc.delete'), employee_path(employee.model), method: :delete,
+    data: { confirm: t('employee.destroy.confirm', name: employee.name) },
+    class: 'btn btn-danger'

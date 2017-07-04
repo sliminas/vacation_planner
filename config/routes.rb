@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   root to: 'home#index'
 
   resources :employees
-  resources :vacation_requests, except: %i(edit update)
+
+  resources :vacation_requests, except: %i(edit)
+  get '/manage_vacation_requests', as: 'manage_vacation_requests',
+    to: 'vacation_requests#manage'
 
 end

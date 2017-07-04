@@ -1,4 +1,1 @@
-h2 = t('employee.new.h2')
-
-= form_for @model, as: :employee do |f|
-  = f.text_field :name
+= render 'form', heading: t('employee.new.h2')

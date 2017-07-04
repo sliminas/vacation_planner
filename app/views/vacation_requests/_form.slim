@@ -1,0 +1,13 @@
+= form_for @form do |f|
+  .row
+    .col-sm-4
+    h2.col-sm-8 = heading
+
+  - %i(start_date end_date).each do |property|
+    = render 'date_field', form: f, property: property
+
+  .form-group.row
+    .col-4
+    .col-8
+      = f.submit t("misc.#{@form.model.persisted? ? 'save' : 'create' }"),
+        class: 'btn btn-primary'

@@ -12,9 +12,16 @@
  *
  */
 
-
 // Custom bootstrap variables must be set or imported *before* bootstrap.
+
+$brand-primary: #348434;
+
 @import "bootstrap";
+@import "employees";
+@import "vacation_requests";
+
+
+// ############################ Navigation
 
 .navbar-inverse .navbar-nav .nav-link {
   color: #ffffff;
@@ -29,6 +36,34 @@
   h2 {
     margin-bottom: 30px;
   }
+}
+
+
+// ############################ Tables
+
+#vacation_requests, #employees {
+  tbody tr td {
+    vertical-align: middle;
+  }
+}
+
+
+// ############################ Forms
+
+form {
+  label {
+    text-align: right;
+  }
+  input {
+    max-width: 400px;
+  }
+  input[type=date] {
+    max-width: 210px;
+  }
+}
+
+.form-check.has-danger {
+  margin-bottom: 25px;
 }
 
 #sign_in_form {
