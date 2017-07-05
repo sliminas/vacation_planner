@@ -17,6 +17,7 @@ class ActiveSupport::TestCase
   # fixtures :all
 
   include EmployeeTestHelper
+  include ActiveJob::TestHelper
 
   def assert_email_sent(count: 1)
     assert_difference 'ActionMailer::Base.deliveries.size', count do

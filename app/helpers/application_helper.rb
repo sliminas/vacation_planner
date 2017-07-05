@@ -49,4 +49,23 @@ module ApplicationHelper
     (params[:sort_dir] == 'asc' && currently_sorted) ? :desc : :asc
   end
 
+  def sort_link(property, path, i18n_scope: 'vacation_request.table.th', **options)
+    link_to t("#{i18n_scope}.#{property}"),
+      send(path.to_sym, sort: property, sort_dir: sort_dir(property)),
+      class: options[:class]
+  end
+
+  def sort_button(property, path, i18n_scope: 'vacation_request.table.th')
+    sort_link(property, path, i18n_scope: i18n_scope, class: sort_button_class(property))
+  end
+
+  def sort_button_class(property)
+    clazz = 'btn btn-secondary btn-sm'
+    if params[:sort] == property.to_s
+      clazz += ' active'
+      clazz += ' desc' if params[:sort_dir] == 'desc'
+    end
+    clazz
+  end
+
 end

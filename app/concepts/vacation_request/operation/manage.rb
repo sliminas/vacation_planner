@@ -22,6 +22,12 @@ class VacationRequest::Manage < Trailblazer::Operation
   step Contract::Build(constant: VacationRequest::Contract::Manage)
   step Contract::Validate()
   step Contract::Persist()
+  step :notify_employee!
+
+  def notify_employee!(*, model:, employee:, **)
+    return true if model.employee == employee # don't notify supervisor managing own requests
+    VacationRequestMailer.request_managed_message(model, employee).deliver_later
+  end
 
 
 end

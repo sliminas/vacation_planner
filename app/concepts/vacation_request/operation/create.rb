@@ -29,6 +29,12 @@ class VacationRequest::Create < Trailblazer::Operation
   }
   step Contract::Validate(key: :vacation_request)
   step Contract::Persist()
+  step :notify_supervisors!
 
+  def notify_supervisors!(*, model:, employee:, **)
+    Employee.supervisors.where.not(email: employee.email).each do |supervisor|
+      VacationRequestMailer.new_request_message(model, supervisor).deliver_later
+    end
+  end
 
 end

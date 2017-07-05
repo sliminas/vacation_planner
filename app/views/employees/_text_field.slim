@@ -5,10 +5,11 @@ div class=("form-group row#{' has-danger' if errors}")
   .col-sm-9
     - field_class = "form-control#{' form-control-danger' if errors}"
 
-    - if property == :email
-      = form.email_field property, class: field_class, value: @form.send(property)
-    - else
-      = form.text_field property, class: field_class, value: @form.send(property)
+    - input_type = input_type(property)
+    = form.send input_type, property, class: field_class, value: @form.send(property),
+      placeholder: t("employee.form.placeholder.#{property}"),
+      min: 0,
+      max: 100
 
     - if errors
       - errors.each do |message|

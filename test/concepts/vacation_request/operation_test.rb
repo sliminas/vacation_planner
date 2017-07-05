@@ -118,14 +118,19 @@ class VacationRequest::OperationTest < ActiveSupport::TestCase
         )
       end
 
-      assert_email_sent do
+      supervisor1 = create_supervisor
+      supervisor2 = create_supervisor
+      # does not get notification about his own request
+      supervisor3 = create_supervisor(name: 'Garfield')
+
+      assert_email_sent(count: 2) do
         assert_difference 'VacationRequest.count' do
           result = VacationRequest::Create.({
               vacation_request: {
                 start_date: '01/07/2017',
                 end_date: '04/07/2017'
               }
-            }, employee: @employee
+            }, employee: supervisor3
           )
           assert result.success?, result['contract.default'].errors.messages
         end
@@ -137,7 +142,18 @@ class VacationRequest::OperationTest < ActiveSupport::TestCase
       assert_equal '04/07/2017', request.end_date.strftime('%d/%m/%Y')
       assert_equal 2, request.vacation_days
       assert_equal 4, request.total_days
-      assert_equal @employee, request.employee
+      assert_equal supervisor3, request.employee
+
+      mails = ActionMailer::Base.deliveries.last(2)
+      assert_equal [supervisor1, supervisor2].map(&:email).sort, mails.map(&:to).flatten.sort
+
+      mail = mails.first
+      assert_equal ['system@vacation-planner.com'], mail.from
+      assert_equal 'New vacation request from Garfield', mail.subject
+      assert_match %r|Garfield submitted a new vacation request.|, mail.body.to_s
+      assert_match %r|Start Date: Sat, 01/07/2017|, mail.body.to_s
+      assert_match %r|End Date: Tue, 04/07/2017|, mail.body.to_s
+      assert_match %r|/manage_vacation_requests|, mail.body.to_s
     end
 
     should 'consider saarland holidays' do
@@ -186,28 +202,65 @@ class VacationRequest::OperationTest < ActiveSupport::TestCase
 
   context 'as supervisor' do
     setup do
-      @supervisor = create_supervisor
+      @supervisor = create_supervisor(name: 'Super wise')
     end
 
     should 'manage vacation requests' do
-      request = create_vacation_request(employee: @employee)
-      assert_difference '@employee.reload.taken_vacation_days', 2 do
-        result = VacationRequest::Manage.({ id: request.to_param, manage_action: 'accepted' }, employee: @supervisor)
-        assert result.success?, result['contract.default'].errors.messages
+      request = create_vacation_request(
+        employee: @employee,
+        start_date: '05/07/2017',
+        end_date: '06/07/2017',
+      )
+
+      assert_email_sent do
+        assert_difference '@employee.reload.taken_vacation_days', 2 do
+          result = VacationRequest::Manage.(
+            { id: request.to_param, manage_action: 'accepted' },
+            employee: @supervisor
+          )
+          assert result.success?, result['contract.default'].errors.messages
+        end
       end
       assert_equal 'accepted', request.reload.state
 
+      mail = ActionMailer::Base.deliveries.last
+      assert_equal [@employee.email], mail.to
+      assert_equal ['system@vacation-planner.com'], mail.from
+
+      assert_equal 'Your vacation request has been accepted.', mail.subject
+      assert_match %r|Super wise accepted your vacation request.|, mail.body.to_s
+      assert_match %r|Start Date: Wed, 05/07/2017|, mail.body.to_s
+      assert_match %r|End Date: Thu, 06/07/2017|, mail.body.to_s
+      assert_match %r|Click here to see your vacation requests:|, mail.body.to_s
+      assert_match %r|/vacation_requests|, mail.body.to_s
+
       request = create_vacation_request(
         employee: @employee,
-        start_date: 4.days.from_now.to_s,
-        end_date: 10.days.from_now.to_s
+        start_date: '07/07/2017',
+        end_date: '10/07/2017',
       )
 
-      assert_no_difference '@employee.reload.taken_vacation_days' do
-        result = VacationRequest::Manage.({ id: request.to_param, manage_action: 'declined' }, employee: @supervisor)
-        assert result.success?, result['contract.default'].errors.messages
+      assert_email_sent do
+        assert_no_difference '@employee.reload.taken_vacation_days' do
+          result = VacationRequest::Manage.(
+            { id: request.to_param, manage_action: 'declined' },
+            employee: @supervisor
+          )
+          assert result.success?, result['contract.default'].errors.messages
+        end
       end
       assert_equal 'declined', request.reload.state
+
+      mail = ActionMailer::Base.deliveries.last
+      assert_equal [@employee.email], mail.to
+      assert_equal ['system@vacation-planner.com'], mail.from
+
+      assert_equal 'Your vacation request has been declined.', mail.subject
+      assert_match %r|Super wise declined your vacation request.|, mail.body.to_s
+      assert_match %r|Start Date: Fri, 07/07/2017|, mail.body.to_s
+      assert_match %r|End Date: Mon, 10/07/2017|, mail.body.to_s
+      assert_match %r|Click here to see your vacation requests:|, mail.body.to_s
+      assert_match %r|/vacation_requests|, mail.body.to_s
     end
   end
 

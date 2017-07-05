@@ -1,16 +1,23 @@
-table#vacation_requests.table.table-striped.table-bordered.table-responsive
+- path = 'vacation_requests_path'
+- path.prepend('manage_') if manage?
+
+#sort_buttons_sm
+  span
+    = t('misc.sort_by') + ': '
+  - %i(start_date end_date state).each do |property|
+    = sort_button(property, path)
+
+table.table.table-striped.table-bordered.table-responsive id=("#{'manage_' if manage?}vacation_requests")
   thead
     tr
       th #
-      th= link_to t('vacation_request.table.th.start_date'),
-        manage_vacation_requests_path(sort: :start_date, sort_dir: sort_dir(:start_date))
-      th= link_to t('vacation_request.table.th.end_date'),
-        manage_vacation_requests_path(sort: :end_date, sort_dir: sort_dir(:end_date))
+      th= sort_link(:start_date, path)
+      th= sort_link(:end_date, path)
       - if manage?
         th= t('vacation_request.table.th.employee')
       th= t('vacation_request.table.th.vacation_days')
       th= t('vacation_request.table.th.total_days')
-      th= t('vacation_request.table.th.state')
+      th= sort_link(:state, path)
       th
       - if manage?
         th

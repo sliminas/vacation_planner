@@ -23,4 +23,11 @@ class VacationRequest::Twin < Disposable::Twin
     super.name
   end
 
+  def date_info
+    [
+      "#{I18n.t('vacation_request.table.th.start_date')}: #{start_date}",
+      "#{I18n.t('vacation_request.table.th.end_date')}: #{end_date}"
+    ].join("\n")
+  end
+
 end

@@ -1,9 +1,13 @@
+#sort_buttons_sm
+  span
+    = t('misc.sort_by') + ': '
+  = sort_button(:name, :employees_path, i18n_scope: 'employee.table.th')
+
 table#employees.table.table-striped.table-bordered.table-responsive
   thead
     tr
       th #
-      th= link_to t('employee.table.th.name'),
-        employees_path(sort: :name, sort_dir: params[:sort_dir] == 'asc' ? :desc : :asc)
+      th= sort_link(:name, :employees_path, i18n_scope: 'employee.table.th')
       th= t('employee.table.th.email')
       th= t('employee.table.th.vacation_days')
       th= t('employee.table.th.taken_vacation_days')

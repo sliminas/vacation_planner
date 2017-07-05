@@ -20,6 +20,8 @@ gem 'rfc822'
 gem 'devise'
 gem 'holidays'
 
+gem 'delayed_job_active_record'
+
 gem 'bootstrap', git: 'https://github.com/twbs/bootstrap-rubygem'
 gem 'sass-rails', '~> 5.0'
 
@@ -52,6 +54,7 @@ end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
+  gem 'daemons'
   gem 'web-console', '>= 3.3.0'
   gem 'better_errors'
   gem 'binding_of_caller'

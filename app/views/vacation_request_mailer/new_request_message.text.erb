@@ -1,0 +1,5 @@
+<%= t('vacation_request.mailer.new.info_text', name: @employee.name) %>
+
+<%= VacationRequest::Twin.new(@request).date_info %>
+
+<%= t('vacation_request.mailer.new.action_text', url: manage_vacation_requests_url) %>

@@ -4,7 +4,7 @@ class VacationRequestsController < ApplicationController
 
   def index
     @requests = VacationRequest::Twin.from_collection(
-      current_employee.vacation_requests.all)
+      current_employee.vacation_requests.order_by(params))
   end
 
   def new
@@ -28,7 +28,7 @@ class VacationRequestsController < ApplicationController
 
   def manage
     @requests = VacationRequest::Twin.from_collection(
-      VacationRequest.includes(:employee).order_by(params).all
+      VacationRequest.includes(:employee).order_by(params)
     )
   end
 

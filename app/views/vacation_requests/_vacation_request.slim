@@ -1,10 +1,10 @@
 tr
-  td width="5%"= vacation_request_counter + 1
-  td width="10%"= vacation_request.start_date
-  td width="10%"= vacation_request.end_date
+  td width="5%" data-label="#"= vacation_request_counter + 1
+  td width="10%" data-label=(t('vacation_request.table.th.start_date')) = vacation_request.start_date
+  td width="10%" data-label=(t('vacation_request.table.th.end_date')) = vacation_request.end_date
   - if manage?
-    td width="10%"= vacation_request.employee
-  td width="10%"= vacation_request.vacation_days
-  td width="10%"= vacation_request.total_days
-  td width="10%"= vacation_request.state
+    td width="10%" data-label=(t('vacation_request.table.th.employee')) = vacation_request.employee
+  td width="10%" data-label=(t('vacation_request.table.th.vacation_days')) = vacation_request.vacation_days
+  td width="10%" data-label=(t('vacation_request.table.th.total_days')) = vacation_request.total_days
+  td width="10%" data-label=(t('vacation_request.table.th.state')) = vacation_request.state
   = render 'action_links', vacation_request: vacation_request

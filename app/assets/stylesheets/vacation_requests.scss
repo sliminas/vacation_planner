@@ -6,3 +6,10 @@ span.badge.badge-warning {
   margin: 0 0 5px 5px;
   font-size: 90%;
 }
+
+#new_vacation_request {
+  @media screen and (max-width: 576px) {
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+}

@@ -2,10 +2,16 @@
   .col-md-5
     h2= t('vacation_request.index.h2')
 
-  .col-md-7
+  .col-md-3
     span.badge.badge-warning= "#{t('employee.table.th.vacation_days')}: #{current_employee.vacation_days}"
-    span.badge.badge-warning= "#{t('employee.table.th.taken_vacation_days')}: #{current_employee.taken_vacation_days.to_f}"
-    = link_to t('vacation_request.index.new_vacation_request'), new_vacation_request_path, class: 'btn btn-primary float-right'
+    span.badge.badge-warning= "#{t('employee.table.th.taken_vacation_days')}: #{current_employee.taken_vacation_days}"
+    span.badge.badge-warning= "#{t('employee.table.th.pending')}: #{current_employee.pending_vacation_days}"
+    span.badge.badge-warning= "#{t('employee.table.th.remaining')}: #{current_employee.remaining_vacation_days}"
+
+  .col-md-4
+    = link_to t('vacation_request.index.new_vacation_request'), new_vacation_request_path,
+      id: 'new_vacation_request',
+      class: 'btn btn-primary float-md-right'
 
 - if @requests.any?
   = render 'vacation_requests_table'

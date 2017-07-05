@@ -13,7 +13,8 @@ module Sortable
     },
     vacation_request: {
       'start_date' => :start_date,
-      'end_date' => :end_date
+      'end_date' => :end_date,
+      'state' => :state
     }
   }
 

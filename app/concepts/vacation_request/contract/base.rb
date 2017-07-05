@@ -11,10 +11,14 @@ class VacationRequest::Contract::Base < Reform::Form
 
   def start_date
     Date.parse(super) if super.present?
+  rescue ArgumentError
+    nil
   end
 
   def end_date
     Date.parse(super) if super.present?
+  rescue ArgumentError
+    nil
   end
 
   def vacation_days

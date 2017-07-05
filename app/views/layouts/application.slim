@@ -12,10 +12,11 @@ html
     nav.navbar.navbar-expand-md.navbar-inverse.bg-primary
       .container
         a.navbar-brand href="/" VacationPlanner
-        button.navbar-toggler.navbar-toggler-right type="button" data-toggle="collapse" data-target="#navbar_toggle_target"
-          span.navbar-toggler-icon
 
         - if navigation_entries.present?
+          button.navbar-toggler.navbar-toggler-right type="button" data-toggle="collapse" data-target="#navbar_toggle_target"
+            span.navbar-toggler-icon
+
           #navbar_toggle_target.navbar-collapse.collapse
             .navbar-nav.mr-auto
               = navigation_links

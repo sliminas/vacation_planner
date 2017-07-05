@@ -104,42 +104,6 @@ class VacationRequestWorkflowTest < ActionDispatch::IntegrationTest
       assert_equal 'declined', find(:xpath, '//tbody/tr[2]/td[7]').text
     end
 
-    should 'have sortable vacation requests' do
-      create_vacation_request(
-        employee: @supervisor,
-        start_date: '01/01/2017',
-        end_date: '01/02/2017'
-      )
-      create_vacation_request(
-        employee: @supervisor,
-        start_date: '02/02/2017',
-        end_date: '05/02/2017'
-      )
-
-      click_on 'Manage vacation requests'
-      assert has_content? 'Status'
-      assert has_content? '05/02/2017'
-
-      click_on 'Start Date'
-      assert_equal 'Sun, 01/01/2017', find(:xpath, '//tbody/tr[1]/td[2]').text
-      assert_equal 'Thu, 02/02/2017', find(:xpath, '//tbody/tr[2]/td[2]').text
-
-      click_on 'Start Date'
-      sleep 0.3
-      assert has_content? 'Start Date' # find doesn't wait
-      assert_equal 'Thu, 02/02/2017', find(:xpath, '//tbody/tr[1]/td[2]').text
-      assert_equal 'Sun, 01/01/2017', find(:xpath, '//tbody/tr[2]/td[2]').text
-
-      click_on 'End Date'
-      sleep 0.3
-      assert_equal 'Sun, 01/01/2017', find(:xpath, '//tbody/tr[1]/td[2]').text
-      assert_equal 'Thu, 02/02/2017', find(:xpath, '//tbody/tr[2]/td[2]').text
-
-      click_on 'End Date'
-      sleep 0.3
-      assert_equal 'Thu, 02/02/2017', find(:xpath, '//tbody/tr[1]/td[2]').text
-      assert_equal 'Sun, 01/01/2017', find(:xpath, '//tbody/tr[2]/td[2]').text
-    end
   end
 
 end

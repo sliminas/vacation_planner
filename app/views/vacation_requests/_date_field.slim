@@ -7,7 +7,8 @@ div class=("form-group row#{' has-danger' if errors}")
     = form.date_field property, class: "form-control#{' form-control-danger' if errors}",
       value: @form.send(property),
       min: "#{current_year}-01-01",
-      max: "#{current_year}-12-31"
+      max: "#{current_year}-12-31",
+      placeholder: 'dd-mm-yyyy'
 
     - if errors
       - errors.each do |message|

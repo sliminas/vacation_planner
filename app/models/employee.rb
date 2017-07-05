@@ -17,7 +17,7 @@ class Employee < ApplicationRecord
   end
 
   def pending_vacation_days
-    vacation_requests.pending.pluck(:vacation_days).sum
+    vacation_requests.pending.pluck(:vacation_days).sum.to_f
   end
 
 end

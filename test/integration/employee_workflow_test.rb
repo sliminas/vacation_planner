@@ -13,6 +13,12 @@ class EmployeeWorkflowTest < ActionDispatch::IntegrationTest
       assert has_content? 'My vacation requests'
       assert has_content? 'No vacation requests found.'
       assert has_content? "Signed in as #{@employee.name}"
+
+      assert has_content? 'Vacation Days: 30.0'
+      assert has_content? 'Taken: 0.0'
+      assert has_content? 'Unaccepted: 0.0'
+      assert has_content? 'Remaining: 30.0'
+
       assert has_no_link? 'Employees'
       click_on 'Sign out'
       assert has_content? 'Signed out successfully.'
@@ -62,24 +68,6 @@ class EmployeeWorkflowTest < ActionDispatch::IntegrationTest
       setup do
         @employee = create_employee(name: 'Example employee')
         visit '/employees'
-      end
-
-      should 'have sortable employees' do
-        create_employee(name: 'Another Employee')
-        visit '/employees'
-        assert has_content? 'Another Employee'
-
-        click_on 'Name'
-        sleep 0.25 # find doesn't wait
-        assert_equal 'Another Employee', find(:xpath, '//tbody/tr[1]/td[2]').text
-        assert_equal 'Example employee', find(:xpath, '//tbody/tr[2]/td[2]').text
-        assert_equal 'Zupervisor', find(:xpath, '//tbody/tr[3]/td[2]').text
-
-        click_on 'Name'
-        sleep 0.25
-        assert_equal 'Zupervisor', find(:xpath, '//tbody/tr[1]/td[2]').text
-        assert_equal 'Example employee', find(:xpath, '//tbody/tr[2]/td[2]').text
-        assert_equal 'Another Employee', find(:xpath, '//tbody/tr[3]/td[2]').text
       end
 
       should 'update employee' do

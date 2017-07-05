@@ -10,6 +10,7 @@ en:
     delete: Delete
     accept: Accept
     decline: Decline
+    sort_by: Sort by
 
   nav:
     vacation_requests: My vacation requests
@@ -26,8 +27,17 @@ en:
         email: Email
         vacation_days: Vacation Days
         taken_vacation_days: Taken
+        pending: Unaccepted
+        remaining: Remaining
         vacation_requests: Vacation Requests
         supervisor: Supervisor
+
+    form:
+      placeholder:
+        name: New employee name
+        email: employee@provider.com
+        password: new_employee_password
+        vacation_days: '# of vacation days'
 
     index:
       h2: Employees
@@ -83,6 +93,17 @@ en:
       confirm: Are you sure you want to delete the vacation request from "%{start}" to "%{end}"?
       success: Vacation request successfully deleted.
       failure: The vacation request could not be deleted.
+
+    mailer:
+      new:
+        subject: New vacation request from %{name}
+        info_text: '%{name} submitted a new vacation request:'
+        action_text: 'Click here to manage the vacation request: %{url}'
+
+      managed:
+        subject: Your vacation request has been %{action}.
+        info_text: 'Supervisor %{name} %{action} your vacation request:'
+        action_text: 'Click here to see your vacation requests: %{url}'
 
   activemodel:
     errors:

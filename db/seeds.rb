@@ -5,3 +5,15 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+result = Employee::Create.(
+  { employee: {
+    name: 'Supervisor',
+    email: 'supervisor@domain.com',
+    password: '#password123',
+    vacation_days: 30,
+    supervisor: true
+  }}
+)
+raise result['contract.default'].errors.messages unless result.success?
+

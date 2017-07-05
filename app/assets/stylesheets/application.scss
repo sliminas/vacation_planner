@@ -47,18 +47,155 @@ $brand-primary: #348434;
   }
 }
 
+#sort_buttons_sm {
+  @media screen and (min-width: 700px) {
+    display: none;
+  }
+
+  margin-bottom: 1rem;
+
+  a {
+    margin: 0 .3rem .3rem 0;
+  }
+
+  a.active::after {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: .3em;
+    vertical-align: middle;
+    content: "";
+    border-top: 0;
+    border-bottom: .3em solid;
+    border-right: .3em solid transparent;
+    border-left: .3em solid transparent;
+  }
+
+  a.active.desc::after {
+    border-top: .3em solid;
+    border-bottom: 0;
+  }
+
+  span {
+    font-weight: bolder;
+  }
+}
+
+$border_color: #eceeef;
+
+@media screen and (max-width: 700px) {
+
+  table, tr, td {
+    padding: 0;
+    border: 1px solid $border_color;
+  }
+
+  .table-striped tbody tr:nth-of-type(odd){
+    background-color: #fff;
+  }
+
+  .table td {
+    padding: 0.75rem 0 0.75rem 0.25rem;
+  }
+
+  thead {
+    display:none;
+  }
+
+  tr {
+    float: left;
+    width: 100%;
+    margin-bottom: 2em;
+    background-color: #fff;
+  }
+
+  td {
+    float: left;
+    width: 100%;
+    padding: 1em;
+  }
+
+  table tr {
+    td:nth-child(even) {
+      background: rgba(0, 0, 0, 0.05);
+    }
+    td:nth-last-child(2), td:last-child {
+      background-color: #fff;
+    }
+  }
+
+  td::before, #vacation_requests td:nth-last-child(2)::before {
+    content:attr(data-label);
+    border-right: 2px solid $border_color;
+    width: 35%;
+    float: left;
+    padding: 1em;
+    margin: -0.9em 1em -0.9em -1em;
+  }
+
+  tr {
+    td:nth-last-child(3) {
+      border-bottom: 1px solid $border_color;
+    }
+
+    td:last-child::before, td:nth-last-child(2)::before {
+      border-bottom: 1px solid $border_color;
+      width: 0;
+      padding: 0;
+      margin: 0;
+    }
+
+    td:nth-last-child(2) {
+      width: 31%;
+      float: left;
+      padding: 1em 0.9em;
+      background-color: #fff;
+    }
+
+    td:last-child {
+      padding: 1em;
+      width: 69%;
+    }
+  }
+
+  #manage_vacation_requests td:nth-last-child(2) {
+    padding: 1em 0.5em;
+  }
+
+  #vacation_requests td:nth-last-child(2) {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 0.75rem 0 0.75rem 0.25rem;
+  }
+  #vacation_requests td:last-child {
+    width: 100%;
+  }
+
+  #manage_vacation_requests, #employees {
+    td:nth-last-child(2)::before {
+      border-bottom: 1px solid $border_color;
+    }
+  }
+
+}
+
 
 // ############################ Forms
 
 form {
   label {
-    text-align: right;
+    @media (min-width: 576px) {
+      text-align: right;
+    }
   }
   input {
     max-width: 400px;
   }
   input[type=date] {
     max-width: 210px;
+  }
+  input[type=checkbox] {
+    margin-top: 5px;
   }
 }
 
