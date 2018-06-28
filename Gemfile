@@ -5,7 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~> 5.1.2'
+gem 'rails', '>= 5.2'
 gem 'pg', '~> 0.18'
 gem 'activerecord-precount'
 
@@ -20,7 +20,6 @@ gem 'rfc822'
 gem 'devise'
 gem 'holidays'
 
-gem 'delayed_job_active_record'
 
 gem 'bootstrap', git: 'https://github.com/twbs/bootstrap-rubygem'
 gem 'sass-rails', '~> 5.0'

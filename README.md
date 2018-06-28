@@ -3,7 +3,7 @@
 A simple vacation planning application with employees and supervisors.
 
 * Ruby version
-  - 2.4.1
+  - 2.5.1
 
 * Configuration
 
